@@ -23,17 +23,30 @@ Scenario: Creating a Fragment
 	<?php $fragment = new Magnus\Tags\Fragment(); ?>
 
 	The initialization should succeed, providing a blank Fragment:
-	<?=  printEval(($fragment->data == array()) && ($fragment->kwargs == array())); ?>
+	<?=  printEval(($fragment->name == null) &&($fragment->data == array()) && ($fragment->kwargs == array())); ?>
 
 Scenario: Creating a Fragment with data
 
 	Given an initialized Fragment with arguments:
-	<?php $fragment = new Magnus\Tags\Fragment(array('foo' => 'bar'), array('baz' => 'qux')); ?>
+	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo' => 'bar'), array('baz' => 'qux')); ?>
 
 	The initialization should succeed, providing a Fragment with a set data property:
 	<?= printEval($fragment->data == array('foo' => 'bar')) ?>
 
 	And a set kwargs property:
 	<?= printEval($fragment->kwargs == array('baz' => 'qux')) ?>
+
+	And a name of thud:
+	<?= printEval($fragment->name == 'thud') ?>
+
+Scenario: Printing out a Fragment with data
+
+	Given an initialized Fragment with arguments:
+	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo' => 'bar'), array('baz' => 'qux')); ?>
+
+	The initialization should succeed and printing out the Fragment should give a starting tag:
+	<?php
+	echo printEval((string) $fragment == '<thud baz="qux">');
+	?>
 
 <?= "\n\n" ?>
