@@ -60,4 +60,49 @@ Scenario: Clearing out an initialized Fragment with data
 	The call should succeed and return a fragment with only the name remaining intact:
 	<?= printEval((string) $fragment == '<thud>'); ?>
 
+Scenario: Extracting subclass keys
+
+	Given an initialized Fragment with no arguments:
+	<?php $fragment = new Magnus\Tags\Fragment(); ?>
+
+	When given $kwargs in initialization or afterwards and specifically popped:
+	<?php
+	$kwargs = array('baz' => 'qux');
+	$poppedElement = $fragment->popSpecific('baz', $kwargs);
+	?>
+
+	The call should succeed and return the value of baz:
+	<?= printEval($poppedElement == 'qux'); ?>
+
+	And kwargs will no longer have a baz key:
+	<?= printEval(!isset($kwargs['baz'])); ?>
+
+Scenario: Extracting default subclass key value with not provided default
+
+	Given an initialized Fragment with no arguments:
+	<?php $fragment = new Magnus\Tags\Fragment(); ?>
+
+	When given $kwargs in initialization or afterwards and specifically popped:
+	<?php
+	$kwargs = array();
+	$poppedElement = $fragment->popSpecific('baz', $kwargs);
+	?>
+
+	The call should succeed and return null:
+	<?= printEval($poppedElement === null) ?>
+
+Scenario: Extracting default subclass key value with provided default
+
+	Given an initialized Fragment with no arguments:
+	<?php $fragment = new Magnus\Tags\Fragment(); ?>
+
+	When given $kwargs in initialization or afterwards and specifically popped:
+	<?php
+	$kwargs = array();
+	$poppedElement = $fragment->popSpecific('baz', $kwargs, 'defaultVal');
+	?>
+
+	The call should succeed and return the default value provided:
+	<?= printEval($poppedElement == 'defaultVal') ?>
+
 <?= "\n\n" ?>
