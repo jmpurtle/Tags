@@ -33,6 +33,11 @@ namespace Magnus\Tags {
 			return $attrString;
 		}
 
+		public function clear() {
+			$this->kwargs = array();
+			$this->data = array();
+		}
+
 	}
 
 }

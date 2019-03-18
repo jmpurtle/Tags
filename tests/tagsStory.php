@@ -49,4 +49,15 @@ Scenario: Printing out a Fragment with data
 	echo printEval((string) $fragment == '<thud baz="qux">');
 	?>
 
+Scenario: Clearing out an initialized Fragment with data
+	
+	Given an initialized Fragment with arguments:
+	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo' => 'bar'), array('baz' => 'qux')); ?>
+
+	When cleared:
+	<?php $fragment->clear(); ?>
+
+	The call should succeed and return a fragment with only the name remaining intact:
+	<?= printEval((string) $fragment == '<thud>'); ?>
+
 <?= "\n\n" ?>
