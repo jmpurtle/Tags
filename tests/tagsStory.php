@@ -62,47 +62,24 @@ Scenario: Clearing out an initialized Fragment with data
 
 Scenario: Extracting subclass keys
 
-	Given an initialized Fragment with no arguments:
-	<?php $fragment = new Magnus\Tags\Fragment(); ?>
+	Given an initialized Fragment with arguments:
+	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo' => 'bar'), array('baz' => 'qux')); ?>
 
-	When given $kwargs in initialization or afterwards and specifically popped:
-	<?php
-	$kwargs = array('baz' => 'qux');
-	$poppedElement = $fragment->popSpecific('baz', $kwargs);
-	?>
+	When a kwargs key is requested:
+	<?php $kwargsElement = $fragment->baz; ?>
 
 	The call should succeed and return the value of baz:
-	<?= printEval($poppedElement == 'qux'); ?>
+	<?= printEval($kwargsElement == 'qux'); ?>
 
-	And kwargs will no longer have a baz key:
-	<?= printEval(!isset($kwargs['baz'])); ?>
+Scenario: Extracting default subclass key value
 
-Scenario: Extracting default subclass key value with not provided default
+	Given an initialized Fragment with arguments:
+	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo' => 'bar'), array('baz' => 'qux')); ?>
 
-	Given an initialized Fragment with no arguments:
-	<?php $fragment = new Magnus\Tags\Fragment(); ?>
-
-	When given $kwargs in initialization or afterwards and specifically popped:
-	<?php
-	$kwargs = array();
-	$poppedElement = $fragment->popSpecific('baz', $kwargs);
-	?>
+	When a kwargs key that does not exist is requested:
+	<?php $kwargsElement = $fragment->quux; ?>
 
 	The call should succeed and return null:
-	<?= printEval($poppedElement === null) ?>
-
-Scenario: Extracting default subclass key value with provided default
-
-	Given an initialized Fragment with no arguments:
-	<?php $fragment = new Magnus\Tags\Fragment(); ?>
-
-	When given $kwargs in initialization or afterwards and specifically popped:
-	<?php
-	$kwargs = array();
-	$poppedElement = $fragment->popSpecific('baz', $kwargs, 'defaultVal');
-	?>
-
-	The call should succeed and return the default value provided:
-	<?= printEval($poppedElement == 'defaultVal') ?>
+	<?= printEval($kwargsElement === null); ?>
 
 <?= "\n\n" ?>

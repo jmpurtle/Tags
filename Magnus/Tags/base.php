@@ -38,16 +38,14 @@ namespace Magnus\Tags {
 			$this->data = array();
 		}
 
-		public function popSpecific($name, &$kwargs, $default = null) {
+		public function __get($name) {
 
-			if (isset($kwargs[$name])) {
-				$returnedElement = $kwargs[$name];
-				unset($kwargs[$name]);
-				return $returnedElement;
+			if (array_key_exists($name, $this->kwargs)){
+				return $this->kwargs[$name];
 			}
 
-			return $default;
-
+			return null;
+			
 		}
 
 	}
