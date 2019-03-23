@@ -56,6 +56,15 @@ namespace Magnus\Tags {
 
 	class Tag extends Fragment {
 
+		public function __invoke($strip = null, Array $kwargs = array()) {
+
+			if ($strip !== null) { $this->strip = $strip; }
+			$this->kwargs = array_merge($this->kwargs, $kwargs);
+
+			return $this;
+
+		}
+
 	}
 
 }

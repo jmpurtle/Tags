@@ -99,4 +99,16 @@ Scenario: Creating a tag
 	echo printEval((string) $tag == '<thud>');
 	?>
 
+
+Scenario: Overriding initialization time values
+
+	Given an initialized Tag with arguments:
+	<?php $tag = new Magnus\Tags\Tag('thud', array('foo' => 'bar'), array('baz' => 'qux')); ?>
+
+	When invoked with new values:
+	<?php $newTag = $tag(false, array('baz' => 'wibble')); ?>
+
+	The invocation should succeed, returning a tag with the updated values:
+	<?= printEval((string) $newTag == '<thud baz="wibble" strip="">'); ?>
+
 <?= "\n\n" ?>
