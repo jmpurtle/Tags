@@ -17,6 +17,7 @@ Feature: Magnus Tags
 		 I want to write DSL
 		 So I can avoid writing lots of HTML and logic markup
 
+
 Scenario: Creating a Fragment
 
 	Given an initialized Fragment with no arguments:
@@ -24,6 +25,7 @@ Scenario: Creating a Fragment
 
 	The initialization should succeed, providing a blank Fragment:
 	<?=  printEval(($fragment->name == null) &&($fragment->data == array()) && ($fragment->kwargs == array())); ?>
+
 
 Scenario: Creating a Fragment with data
 
@@ -39,6 +41,7 @@ Scenario: Creating a Fragment with data
 	And a name of thud:
 	<?= printEval($fragment->name == 'thud') ?>
 
+
 Scenario: Printing out a Fragment with data
 
 	Given an initialized Fragment with arguments:
@@ -48,6 +51,7 @@ Scenario: Printing out a Fragment with data
 	<?php
 	echo printEval((string) $fragment == '<thud baz="qux">');
 	?>
+
 
 Scenario: Clearing out an initialized Fragment with data
 	
@@ -60,6 +64,7 @@ Scenario: Clearing out an initialized Fragment with data
 	The call should succeed and return a fragment with only the name remaining intact:
 	<?= printEval((string) $fragment == '<thud>'); ?>
 
+
 Scenario: Extracting subclass keys
 
 	Given an initialized Fragment with arguments:
@@ -71,6 +76,7 @@ Scenario: Extracting subclass keys
 	The call should succeed and return the value of baz:
 	<?= printEval($kwargsElement == 'qux'); ?>
 
+
 Scenario: Extracting default subclass key value
 
 	Given an initialized Fragment with arguments:
@@ -81,5 +87,16 @@ Scenario: Extracting default subclass key value
 
 	The call should succeed and return null:
 	<?= printEval($kwargsElement === null); ?>
+
+
+Scenario: Creating a tag
+
+	Given an initialized Tag with only a name:
+	<?php $tag = new Magnus\Tags\Tag('thud'); ?>
+
+	The initialization should succeed and printing out the Tag should give a starting tag:
+	<?php
+	echo printEval((string) $tag == '<thud>');
+	?>
 
 <?= "\n\n" ?>

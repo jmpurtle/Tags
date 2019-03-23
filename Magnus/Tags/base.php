@@ -48,6 +48,14 @@ namespace Magnus\Tags {
 			
 		}
 
+		public function __set($name, $value) {
+			$this->kwargs[$name] = $value;
+		}
+
+	}
+
+	class Tag extends Fragment {
+
 	}
 
 }
