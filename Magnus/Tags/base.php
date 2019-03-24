@@ -7,6 +7,8 @@ namespace Magnus\Tags {
 		public $data;
 		public $kwargs;
 
+		public $logicProps = array();
+
 		public function __construct($name = null, Array $data = array(), Array $kwargs = array()) {
 			$this->name = $name;
 			$this->data = $data;
@@ -44,6 +46,10 @@ namespace Magnus\Tags {
 				return $this->kwargs[$name];
 			}
 
+			if (array_key_exists($name, $this->logicProps)) {
+				return $this->logicProps[$name];
+			}
+
 			return null;
 			
 		}
@@ -56,9 +62,9 @@ namespace Magnus\Tags {
 
 	class Tag extends Fragment {
 
-		public function __invoke($strip = null, Array $kwargs = array()) {
+		public function __invoke($strip = false, Array $kwargs = array()) {
 
-			if ($strip !== null) { $this->strip = $strip; }
+			$this->logicProps['strip'] = $strip;
 			$this->kwargs = array_merge($this->kwargs, $kwargs);
 
 			return $this;

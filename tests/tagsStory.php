@@ -109,6 +109,17 @@ Scenario: Overriding initialization time values
 	<?php $newTag = $tag(false, array('baz' => 'wibble')); ?>
 
 	The invocation should succeed, returning a tag with the updated values:
-	<?= printEval((string) $newTag == '<thud baz="wibble" strip="">'); ?>
+	<?= printEval((string) $newTag == '<thud baz="wibble">'); ?>
+
+Scenario: Employing Logic Properties:
+	
+	Given an initialized Tag with arguments:
+	<?php $tag = new Magnus\Tags\Tag('thud', array('foo' => 'bar'), array('baz' => 'qux')); ?>
+
+	When invoked with new values:
+	<?php $newTag = $tag(true, array('baz' => 'wibble')); ?>
+
+	The invocation should succeed and the tag's Logical Property of "strip" should be true:
+	<?= printEval($newTag->strip === true) ?>
 
 <?= "\n\n" ?>
