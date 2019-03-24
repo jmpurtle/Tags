@@ -5,13 +5,13 @@ namespace Magnus\Tags {
 
 		public $name;
 		public $data;
+		public $logicProps;
 		public $kwargs;
 
-		public $logicProps = array();
-
-		public function __construct($name = null, Array $data = array(), Array $kwargs = array()) {
+		public function __construct($name = null, Array $data = array(), Array $logicProps = array(), Array $kwargs = array()) {
 			$this->name = $name;
 			$this->data = $data;
+			$this->logicProps = $logicProps;
 			$this->kwargs = $kwargs;
 		}
 
@@ -36,8 +36,9 @@ namespace Magnus\Tags {
 		}
 
 		public function clear() {
-			$this->kwargs = array();
 			$this->data = array();
+			$this->logicProps = array();
+			$this->kwargs = array();
 		}
 
 		public function __get($name) {
@@ -54,17 +55,13 @@ namespace Magnus\Tags {
 			
 		}
 
-		public function __set($name, $value) {
-			$this->kwargs[$name] = $value;
-		}
-
 	}
 
 	class Tag extends Fragment {
 
-		public function __invoke($strip = false, Array $kwargs = array()) {
+		public function __invoke(Array $logicProps = array(), Array $kwargs = array()) {
 
-			$this->logicProps['strip'] = $strip;
+			$this->logicProps = array_merge($this->logicProps, $logicProps);
 			$this->kwargs = array_merge($this->kwargs, $kwargs);
 
 			return $this;
