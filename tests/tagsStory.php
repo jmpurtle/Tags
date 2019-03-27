@@ -142,5 +142,15 @@ Scenario: Working with child elements
 	The call should succeed, returning a paragraph element with foo in it:
 	<?= printEval($tagRendered == '<p>foo</p>'); ?>
 
+Scenario: Creating a void element:
+
+	Given an initialized Tag intended to be void:
+	<?php $tag = new Magnus\Tags\Tag('input', array('foo'), array('void' => true)) ?>
+
+	When rendered:
+	<?php $tagRendered = $tag->render(); ?>
+
+	The call should succeed, returning an input element with no content and self-closed tag:
+	<?= printEval($tagRendered == '<input/>'); ?>
 
 <?= "\n\n" ?>

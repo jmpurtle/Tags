@@ -76,7 +76,7 @@ namespace Magnus\Tags {
 					<{$this->name}{$this->buildAttrString($this->kwargs)}
 TEMPLATE;
 
-				if ($this->void) { return '/>'; }
+				if ($this->void) { yield ' />'; return; }
 				yield '>';
 			}
 
