@@ -68,6 +68,53 @@ namespace Magnus\Tags {
 
 		}
 
+		protected function tagIterator() {
+
+			if (!$this->strip) {
+				if ($this->prefix) { yield $this->prefix; }
+				yield <<<TEMPLATE
+					<{$this->name}{$this->buildAttrString($this->kwargs)}
+TEMPLATE;
+
+				if ($this->void) { return '/>'; }
+				yield '>';
+			}
+
+			if ($this->simple) { return; }
+
+			foreach ($this->data as $child) {
+				if (is_object($child) && method_exists($child, 'tagIterator')) {
+					foreach ($child->tagIterator() as $element) {
+						if (is_string($element)) {
+							yield $element;
+							continue;
+						}
+					}
+
+					continue;
+				}
+
+				yield $child;
+			}
+
+			if (!$this->void) {
+				yield <<<TEMPLATE
+					</{$this->name}>
+TEMPLATE;
+			}
+
+		}
+
+		public function render() {
+
+			$template = '';
+			$tagIterator = $this->tagIterator();
+			foreach ($tagIterator as $chunk) { $template .= trim($chunk); }
+
+			return $template;
+
+		}
+
 	}
 
 }
