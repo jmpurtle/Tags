@@ -131,6 +131,7 @@ Scenario: Overriding initialization time values
 	The invocation should succeed, returning a tag with the updated values:
 	<?= printEval((string) $newTag == '<thud baz="wibble">'); ?>
 	
+
 Scenario: Working with child elements
 
 	Given an initialized Tag with arguments including text children:
@@ -141,6 +142,57 @@ Scenario: Working with child elements
 
 	The call should succeed, returning a paragraph element with foo in it:
 	<?= printEval($tagRendered == '<p>foo</p>'); ?>
+
+
+Scenario: Nested Tags
+
+	Given an initialized Tag with children:
+	<?php
+	$layout = new Magnus\Tags\Tag('div', array(
+		new Magnus\Tags\Tag('span', array('bar'))
+	));
+	?>
+
+	When rendered:
+	<?php $layoutRendered = $layout->render(); ?>
+
+	The call should succeed, returning a div and span with content:
+	<?= printEval($layoutRendered == '<div><span>bar</span></div>'); ?>
+
+
+Scenario: Mixed nested Tags
+
+	Given an initialized Tag with mixed children:
+	<?php
+	$layout = new Magnus\Tags\Tag('div', array(
+		'foo',
+		new Magnus\Tags\Tag('span', array('bar'))
+	));
+	?>
+
+	When rendered:
+	<?php $layoutRendered = $layout->render(); ?>
+
+	The call should succeed, returning a div, text and span with content:
+	<?= printEval($layoutRendered == '<div>foo<span>bar</span></div>'); ?>
+
+
+Scenario: Mixed nested Tags with voids
+
+	Given an initialized Tag with mixed children:
+	<?php
+	$layout = new Magnus\Tags\Tag('fieldset', array(
+		new Magnus\Tags\Tag('label', array('foo')),
+		new Magnus\Tags\Tag('input', array('bar'), array('void' => true))
+	));
+	?>
+
+	When rendered:
+	<?php $layoutRendered = $layout->render(); ?>
+
+	The call should succeed, returning a fieldset, label and input:
+	<?= printEval($layoutRendered == '<fieldset><label>foo</label><input/></fieldset>'); ?>
+
 
 Scenario: Creating a void element:
 
