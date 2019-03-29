@@ -115,6 +115,24 @@ TEMPLATE;
 
 		}
 
+		public function __clone() {
+			$this->clear();
+		}
+
+		public function __call($name, $args) {
+			$argCount = count($args);
+			for ($argCount; $argCount < 3; $argCount++) { 
+				$args[] = array();
+			}
+
+			$tag = clone $this;
+			$tag->name = $name;
+			$tag->data = $args[0];
+			$tag->logicProps = $args[1];
+			$tag->kwargs = $args[2];
+			return $tag;
+		}
+
 	}
 
 }
