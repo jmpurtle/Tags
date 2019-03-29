@@ -6,7 +6,9 @@ namespace Magnus {
 
 		$packageClassMap = array(
 			'Magnus\\Tags\\Fragment' => '/Magnus/Tags/base.php',
-			'Magnus\\Tags\\Tag'      => '/Magnus/Tags/base.php'
+			'Magnus\\Tags\\Tag'      => '/Magnus/Tags/base.php',
+
+			'Magnus\\Tags\\Widget'   => '/Magnus/Widgets/base.php'
 		);
 
 		if (isset($packageClassMap[$className])) {
