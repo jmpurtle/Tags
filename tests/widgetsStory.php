@@ -45,6 +45,19 @@ Scenario: Getting a value that does not exist on a widget
 	Given a widget with data in it corresponding to this widget:
 	<?php $widget = new T\Widget('foo', null, null, array('baz' => 'bar')); ?>
 
-	<?= printEval($widget->value() == null) ?>
+	<?= printEval($widget->value() === null) ?>
+
+Scenario: Creating a nested widget
+
+	Given a widget with children:
+	<?php $widget = new T\NestedWidget(null, null, null, array(), array(), array(
+		new T\Widget()
+	)); ?>
+
+	The initialization should succeed, returning a nameless nested widget containing a widget:
+	<?=  printEval(
+		   ($widget->name == null)
+		&& (get_class($widget->children[0]) == 'Magnus\Tags\Widget')
+	); ?>
 
 <?= "\n\n" ?>

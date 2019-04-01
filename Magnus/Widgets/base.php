@@ -40,7 +40,18 @@ namespace Magnus\Tags {
 			}
 
 			return null;
-			
+
+		}
+
+	}
+
+	class NestedWidget extends Widget {
+
+		public $children;
+
+		public function __construct($name = null, $title = null, $default = null, Array $data = array(), Array $kwargs = array(), Array $children = array()) {
+			$this->children = $children;
+			parent::__construct($name, $title, $default, $data, $kwargs);
 		}
 
 	}
