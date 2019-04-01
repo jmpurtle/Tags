@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 use Magnus\Tags as T;
 $packageRoot = dirname(__DIR__);
 require_once $packageRoot . '/autoload.php';
@@ -29,5 +31,20 @@ Scenario: Creating a widget
 		&& ($widget->kwargs == array())
 		&& ($widget->default == null)
 	); ?>
+
+
+Scenario: Getting the value of a widget
+
+	Given a widget with data in it corresponding to this widget:
+	<?php $widget = new T\Widget('foo', null, null, array('foo' => 'bar')); ?>
+
+	<?= printEval($widget->value() == 'bar') ?>
+
+Scenario: Getting a value that does not exist on a widget
+
+	Given a widget with data in it corresponding to this widget:
+	<?php $widget = new T\Widget('foo', null, null, array('baz' => 'bar')); ?>
+
+	<?= printEval($widget->value() == null) ?>
 
 <?= "\n\n" ?>

@@ -18,6 +18,31 @@ namespace Magnus\Tags {
 			$this->kwargs = $kwargs;
 		}
 
+		public function value() {
+
+			$value = $this->default;
+			if (array_key_exists($this->name, $this->data)) {
+				$value = $this->data[$this->name];
+			}
+
+			if ($this->transform) {
+				$value = $this->transform($value);
+			}
+
+			return $value;
+
+		}
+
+		public function __get($name) {
+
+			if (array_key_exists($this->name, $this->kwargs)) {
+				return $this->kwargs[$this->name];
+			}
+
+			return null;
+			
+		}
+
 	}
 
 }
