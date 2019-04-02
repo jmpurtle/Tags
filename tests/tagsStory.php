@@ -31,13 +31,10 @@ Scenario: Creating a Fragment
 Scenario: Creating a Fragment with data
 
 	Given an initialized Fragment with arguments:
-	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo'), array('wibble' => 'wobble'), array('baz' => 'qux')); ?>
+	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo'), array('baz' => 'qux')); ?>
 
 	The initialization should succeed, providing a Fragment with a set data property:
 	<?= printEval($fragment->data == array('foo')) ?>
-
-	And a set logicProps property:
-	<?= printEval($fragment->logicProps == array('wibble' => 'wobble')) ?>
 
 	And a set kwargs property:
 	<?= printEval($fragment->kwargs == array('baz' => 'qux')) ?>
@@ -49,7 +46,7 @@ Scenario: Creating a Fragment with data
 Scenario: Printing out a Fragment with data
 
 	Given an initialized Fragment with arguments:
-	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo'), array('wibble' => 'wobble'), array('baz' => 'qux')); ?>
+	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo'), array('baz' => 'qux')); ?>
 
 	The initialization should succeed and printing out the Fragment should give a starting tag:
 	<?php
@@ -60,7 +57,7 @@ Scenario: Printing out a Fragment with data
 Scenario: Clearing out an initialized Fragment with data
 	
 	Given an initialized Fragment with arguments:
-	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo'), array('wibble' => 'wobble'), array('baz' => 'qux')); ?>
+	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo'), array('baz' => 'qux')); ?>
 
 	When cleared:
 	<?php $fragment->clear(); ?>
@@ -72,7 +69,7 @@ Scenario: Clearing out an initialized Fragment with data
 Scenario: Extracting subclass keys
 
 	Given an initialized Fragment with arguments:
-	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo'), array('wibble' => 'wobble'), array('baz' => 'qux')); ?>
+	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo'), array('baz' => 'qux')); ?>
 
 	When a kwargs key is requested:
 	<?php $kwargsElement = $fragment->baz; ?>
@@ -80,29 +77,17 @@ Scenario: Extracting subclass keys
 	The call should succeed and return the value of baz:
 	<?= printEval($kwargsElement == 'qux'); ?>
 
-	And when a LogicProps key is requested:
-	<?php $logicProp = $fragment->wibble; ?>
-
-	The call should succeed and return the value of wibble:
-	<?= printEval($logicProp == 'wobble'); ?>
-
 
 Scenario: Extracting default subclass key value
 
 	Given an initialized Fragment with arguments:
-	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo'), array('wibble' => 'wobble'), array('baz' => 'qux')); ?>
+	<?php $fragment = new Magnus\Tags\Fragment('thud', array('foo'), array('baz' => 'qux')); ?>
 
 	When a kwargs key that does not exist is requested:
 	<?php $kwargsElement = $fragment->quux; ?>
 
 	The call should succeed and return null:
 	<?= printEval($kwargsElement === null); ?>
-
-	And when a LogicProps key that does not exist is requested:
-	<?php $logicProp = $fragment->womble; ?>
-
-	The call should succeed and return null:
-	<?= printEval($logicProp === null); ?>
 
 
 Scenario: Creating a tag
@@ -119,10 +104,10 @@ Scenario: Creating a tag
 Scenario: Overriding initialization time values
 
 	Given an initialized Tag with arguments:
-	<?php $tag = new Magnus\Tags\Tag('thud', array('foo'), array('wibble' => 'wobble'), array('baz' => 'qux')); ?>
+	<?php $tag = new Magnus\Tags\Tag('thud', array('foo'), array('baz' => 'qux')); ?>
 
 	When invoked with new values:
-	<?php $newTag = $tag(array('wibble' => 'wobble'), array('baz' => 'wibble')); ?>
+	<?php $newTag = $tag(array('baz' => 'wibble')); ?>
 
 	The invocation should succeed, returning a tag with the updated values:
 	<?= printEval((string) $newTag == '<thud baz="wibble">'); ?>

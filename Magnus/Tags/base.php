@@ -5,14 +5,14 @@ namespace Magnus\Tags {
 
 		public $name;
 		public $data;
-		public $logicProps;
 		public $kwargs;
 
-		public function __construct($name = null, Array $data = array(), Array $logicProps = array(), Array $kwargs = array()) {
+		public function __construct($name = null, Array $data = array(), Array $kwargs = array()) {
 			$this->name = $name;
 			$this->data = $data;
-			$this->logicProps = $logicProps;
 			$this->kwargs = $kwargs;
+
+			$this->loadProps();
 		}
 
 		public function __toString() {
@@ -37,7 +37,6 @@ namespace Magnus\Tags {
 
 		public function clear() {
 			$this->data = array();
-			$this->logicProps = array();
 			$this->kwargs = array();
 		}
 
@@ -47,21 +46,31 @@ namespace Magnus\Tags {
 				return $this->kwargs[$name];
 			}
 
-			if (array_key_exists($name, $this->logicProps)) {
-				return $this->logicProps[$name];
-			}
-
 			return null;
 			
+		}
+
+		public function loadProps() {
+			
+			$objVars = array_keys(get_object_vars($this));
+
+			foreach ($objVars as $objProps) {
+				if (isset($this->kwargs[$objProps])) {
+					$this->$objProps = $this->kwargs[$objProps];
+					unset($this->kwargs[$objProps]);
+				}
+			}
+
 		}
 
 	}
 
 	class Tag extends Fragment {
 
-		public function __invoke(Array $logicProps = array(), Array $kwargs = array()) {
+		public $void = false;
 
-			$this->logicProps = array_merge($this->logicProps, $logicProps);
+		public function __invoke(Array $kwargs = array()) {
+
 			$this->kwargs = array_merge($this->kwargs, $kwargs);
 
 			return $this;
@@ -121,15 +130,14 @@ TEMPLATE;
 
 		public function __call($name, $args) {
 			$argCount = count($args);
-			for ($argCount; $argCount < 3; $argCount++) { 
+			for ($argCount; $argCount < 2; $argCount++) { 
 				$args[] = array();
 			}
 
 			$tag = clone $this;
 			$tag->name = $name;
 			$tag->data = $args[0];
-			$tag->logicProps = $args[1];
-			$tag->kwargs = $args[2];
+			$tag->kwargs = $args[1];
 			return $tag;
 		}
 
