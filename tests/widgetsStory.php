@@ -40,12 +40,14 @@ Scenario: Getting the value of a widget
 
 	<?= printEval($widget->value() == 'bar') ?>
 
+
 Scenario: Getting a value that does not exist on a widget
 
 	Given a widget with data in it corresponding to this widget:
 	<?php $widget = new T\Widget('foo', null, null, array('baz' => 'bar')); ?>
 
 	<?= printEval($widget->value() === null) ?>
+
 
 Scenario: Creating a nested widget
 
@@ -59,5 +61,26 @@ Scenario: Creating a nested widget
 		   ($widget->name == null)
 		&& (get_class($widget->children[0]) == 'Magnus\Tags\Widget')
 	); ?>
+
+
+Scenario: Creating a form widget with default method
+
+	Given a form widget with no arguments:
+	<?php $widget = new T\Form(); ?>
+
+	The initialization should succeed with method being 'post':
+	<?= printEval($widget->method == 'post') ?>
+
+
+Scenario: Creating a form widget with method override
+
+	Given a form widget with no arguments:
+	<?php $widget = new T\Form(null, null, null, array(), array('method' =>'patch')); ?>
+
+	The initialization should succeed with method being 'patch':
+	<?= printEval($widget->method == 'patch') ?>
+
+	And kwargs should not contain the method:
+	<?= printEval(isset($widget->kwargs['method']) === false) ?>
 
 <?= "\n\n" ?>

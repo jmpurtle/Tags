@@ -16,6 +16,8 @@ namespace Magnus\Tags {
 			$this->default = $default;
 			$this->data = $data;
 			$this->kwargs = $kwargs;
+
+			$this->loadAttributes();
 		}
 
 		public function value() {
@@ -43,6 +45,19 @@ namespace Magnus\Tags {
 
 		}
 
+		public function loadAttributes() {
+			
+			$objVars = array_keys(get_object_vars($this));
+
+			foreach ($objVars as $attr) {
+				if (isset($this->kwargs[$attr])) {
+					$this->$attr = $this->kwargs[$attr];
+					unset($this->kwargs[$attr]);
+				}
+			}
+
+		}
+
 	}
 
 	class NestedWidget extends Widget {
@@ -53,6 +68,12 @@ namespace Magnus\Tags {
 			$this->children = $children;
 			parent::__construct($name, $title, $default, $data, $kwargs);
 		}
+
+	}
+
+	class Form extends NestedWidget {
+
+		public $method = 'post';
 
 	}
 
