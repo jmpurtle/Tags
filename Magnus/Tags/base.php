@@ -3,12 +3,12 @@ namespace Magnus\Tags {
 	
 	class Fragment {
 
-		public $name;
+		public $tagName;
 		public $data;
 		public $kwargs;
 
-		public function __construct($name = null, Array $data = array(), Array $kwargs = array()) {
-			$this->name = $name;
+		public function __construct($tagName = null, Array $data = array(), Array $kwargs = array()) {
+			$this->tagName = $tagName;
 			$this->data = $data;
 			$this->kwargs = $kwargs;
 
@@ -16,7 +16,7 @@ namespace Magnus\Tags {
 		}
 
 		public function __toString() {
-			return '<' . $this->name . $this->buildAttrString($this->kwargs) . '>';
+			return '<' . $this->tagName . $this->buildAttrString($this->kwargs) . '>';
 		}
 
 		protected function buildAttrString(Array $kwargs = array()) {
@@ -82,7 +82,7 @@ namespace Magnus\Tags {
 			if (!$this->strip) {
 				if ($this->prefix) { yield $this->prefix; }
 				yield <<<TEMPLATE
-					<{$this->name}{$this->buildAttrString($this->kwargs)}
+					<{$this->tagName}{$this->buildAttrString($this->kwargs)}
 TEMPLATE;
 
 				if ($this->void) { yield ' />'; return; }
@@ -108,7 +108,7 @@ TEMPLATE;
 
 			if (!$this->void) {
 				yield <<<TEMPLATE
-					</{$this->name}>
+					</{$this->tagName}>
 TEMPLATE;
 			}
 
@@ -135,9 +135,11 @@ TEMPLATE;
 			}
 
 			$tag = clone $this;
-			$tag->name = $name;
+			$tag->tagName = $name;
 			$tag->data = $args[0];
 			$tag->kwargs = $args[1];
+
+			$tag->loadProps();
 			return $tag;
 		}
 

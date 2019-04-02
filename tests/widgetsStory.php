@@ -83,4 +83,28 @@ Scenario: Creating a form widget with method override
 	And kwargs should not contain the method:
 	<?= printEval(isset($widget->kwargs['method']) === false) ?>
 
+
+Scenario: Creating an input widget
+
+	Given an input widget:
+	<?php $widget = new T\Input('input1'); ?>
+
+	When rendered:
+	<?php $renderedWidget = $widget->template(); ?>
+
+	The call should succeed and return an input tag:
+	<?= printEval($renderedWidget == '<input type name="input1" id="input1-field"/>') ?>
+
+
+Scenario: Creating an input widget with extra attributes
+
+	Given an input widget:
+	<?php $widget = new T\Input('input1', null, null, array(), array('data-track' => true)); ?>
+
+	When rendered:
+	<?php $renderedWidget = $widget->template(); ?>
+
+	The call should succeed and return an input tag:
+	<?= printEval($renderedWidget == '<input type name="input1" id="input1-field" data-track="1"/>') ?>
+
 <?= "\n\n" ?>

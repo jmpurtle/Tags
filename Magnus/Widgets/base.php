@@ -58,6 +58,11 @@ namespace Magnus\Tags {
 
 		}
 
+		public function template() {
+			throw new Exception("Template is not implemented", 1);
+			
+		}
+
 	}
 
 	class NestedWidget extends Widget {
@@ -76,5 +81,39 @@ namespace Magnus\Tags {
 		public $method = 'post';
 
 	}
+
+	class FieldSet extends NestedWidget {
+		public $layout = null;
+	}
+
+	class Label extends Widget {
+		public $for = null;
+	}
+
+	class Input extends Widget {
+		public $type = null;
+
+		public function template() {
+			$t = new Tag();
+
+			$attrs = array(
+				'type' => $this->type,
+				'void' => true,
+				'name' => $this->name,
+				'id'   => $this->name . '-field'
+			);
+
+			$attrs = array_merge($attrs, $this->kwargs);
+
+			$template = $t->input(array(), $attrs);
+			return $template->render();
+		}
+	}
+
+	class BooleanInput extends Input {
+		public $transform = 'BooleanTransform';
+	}
+
+	class Link extends Widget {}
 
 }

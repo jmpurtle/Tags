@@ -21,9 +21,8 @@ Scenario: Creating a Fragment
 
 	The initialization should succeed, providing a blank Fragment:
 	<?=  printEval(
-		   ($fragment->name == null)
+		   ($fragment->tagName == null)
 		&& ($fragment->data == array())
-		&& ($fragment->logicProps == array())
 		&& ($fragment->kwargs == array())
 	); ?>
 
@@ -40,7 +39,7 @@ Scenario: Creating a Fragment with data
 	<?= printEval($fragment->kwargs == array('baz' => 'qux')) ?>
 
 	And a name of thud:
-	<?= printEval($fragment->name == 'thud') ?>
+	<?= printEval($fragment->tagName == 'thud') ?>
 
 
 Scenario: Printing out a Fragment with data
@@ -185,5 +184,19 @@ Scenario: Creating a void element:
 
 	The call should succeed, returning an input element with no content and self-closed tag:
 	<?= printEval($tagRendered == '<input/>'); ?>
+
+Scenario: Naming tags:
+
+	Given an initialized Tag:
+	<?php $tag = new Magnus\Tags\Tag('input', array(), array('void' => true)); ?>
+
+	When given a name via kwargs:
+	<?php $newTag = $tag(array('name' => 'input1')); ?>
+
+	Then rendered:
+	<?php $tagRendered = $tag->render(); ?>
+
+	The call should succeed, returning an input element with a name attribute of input1:
+	<?= printEval($tagRendered == '<input name="input1"/>') ?>
 
 <?= "\n\n" ?>
