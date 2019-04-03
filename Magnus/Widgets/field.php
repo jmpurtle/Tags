@@ -58,4 +58,40 @@ namespace Magnus\Tags {
 		public $transform = 'IntegerTransform';
 		public $type = 'number';
 	}
+
+	class FloatField extends NumberField {
+		public $transform = 'FloatTransform';
+	}
+
+	class RangeField extends Input {
+		public $transform = 'IntegerTransform';
+		public $type = 'range';
+	}
+
+	class FloatRangeField extends RangeField {
+		public $transform = 'FloatTransform';
+	}
+
+	class ColorField extends Input {
+		public $type = 'color';
+	}
+
+	class FileField extends Input {
+		public $type = 'file';
+	}
+
+	class RadioField extends BooleanInput {
+		public $type = 'radio';
+	}
+
+	class CheckboxField extends BooleanInput {
+		public $transform = 'BooleanTransform';
+		public $type = 'checkbox';
+	}
+
+	class TextArea extends Input {}
+
+	class SelectField extends Input {
+		public $values = array();
+	}
 }

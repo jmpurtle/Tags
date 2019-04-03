@@ -90,6 +90,10 @@ namespace Magnus\Tags {
 		public $for = null;
 	}
 
+	class Layout extends NestedWidget {
+		public $label = null;
+	}
+
 	class Input extends Widget {
 		public $type = null;
 
