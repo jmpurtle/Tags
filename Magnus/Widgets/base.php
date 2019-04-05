@@ -80,6 +80,25 @@ namespace Magnus\Tags {
 
 		public $method = 'post';
 
+		public function template() {
+			$t = new Tag();
+
+			$attrs = array(
+				'name' => $this->name,
+				'id'   => $this->name . '-field'
+			);
+
+			$attrs = array_merge($attrs, $this->kwargs);
+
+			$interior = array();
+			
+			foreach ($this->children as $child) {
+				$interior[] = $child->template($this->data);
+			}
+
+			$template = $t->form($interior, $attrs);
+			return $template->render();
+		}
 	}
 
 	class FieldSet extends NestedWidget {

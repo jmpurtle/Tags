@@ -107,4 +107,18 @@ Scenario: Creating an input widget with extra attributes
 	The call should succeed and return an input tag:
 	<?= printEval($renderedWidget == '<input type name="input1" id="input1-field" data-track="1"/>') ?>
 
+
+Scenario: Rendering a form widget
+
+	Given a form widget:
+	<?php $widget = new T\Form('test', null, null, array(), array(), array(
+		new T\Input('field1')
+	)); ?>
+
+	When rendered:
+	<?php $renderedWidget = $widget->template(); ?>
+
+	The call should succeed and return form markup:
+	<?= printEval($renderedWidget == '<form name="test" id="test-field"><input type name="field1" id="field1-field"/></form>'); ?>
+
 <?= "\n\n" ?>
