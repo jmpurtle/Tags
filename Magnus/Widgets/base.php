@@ -74,6 +74,16 @@ namespace Magnus\Tags {
 			parent::__construct($name, $title, $default, $data, $kwargs);
 		}
 
+		public function renderInterior() {
+			$interior = array();
+			
+			foreach ($this->children as $child) {
+				$interior[] = $child->template($this->data);
+			}
+
+			return $interior;
+		}
+
 	}
 
 	class Form extends NestedWidget {
@@ -85,28 +95,49 @@ namespace Magnus\Tags {
 
 			$attrs = array(
 				'name' => $this->name,
-				'id'   => $this->name . '-field'
+				'id'   => $this->name . '-form'
 			);
 
 			$attrs = array_merge($attrs, $this->kwargs);
 
-			$interior = array();
-			
-			foreach ($this->children as $child) {
-				$interior[] = $child->template($this->data);
-			}
-
-			$template = $t->form($interior, $attrs);
+			$template = $t->form($this->renderInterior(), $attrs);
 			return $template->render();
 		}
 	}
 
 	class FieldSet extends NestedWidget {
+
 		public $layout = null;
+
+		public function template() {
+			$t = new Tag();
+
+			$attrs = array(
+				'id' => $this->name . '-set'
+			);
+
+			$attrs = array_merge($attrs, $this->kwargs);
+
+			$template = $t->fieldset($this->renderInterior(), $attrs);
+			return $template->render();
+		}
 	}
 
 	class Label extends Widget {
+
 		public $for = null;
+
+		public function template() {
+			$t = new Tag();
+
+			$attrs = array();
+			if ($this->for) { $attrs['for'] = $this->for . '-field'; }
+
+			$attrs = array_merge($attrs, $this->kwargs);
+
+			$template = $t->label(array($this->title), $attrs);
+			return $template->render();
+		}
 	}
 
 	class Layout extends NestedWidget {

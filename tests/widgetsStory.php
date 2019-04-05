@@ -119,6 +119,32 @@ Scenario: Rendering a form widget
 	<?php $renderedWidget = $widget->template(); ?>
 
 	The call should succeed and return form markup:
-	<?= printEval($renderedWidget == '<form name="test" id="test-field"><input type name="field1" id="field1-field"/></form>'); ?>
+	<?= printEval($renderedWidget == '<form name="test" id="test-form"><input type name="field1" id="field1-field"/></form>'); ?>
+
+
+Scenario: Rendering a fieldset widget
+
+	Given a fieldset widget:
+	<?php $widget = new T\FieldSet('test', null, null, array(), array(), array(
+		new T\Input('field1')
+	)); ?>
+
+	When rendered:
+	<?php $renderedWidget = $widget->template(); ?>
+
+	The call should succeed and return fieldset markup:
+	<?= printEval($renderedWidget == '<fieldset id="test-set"><input type name="field1" id="field1-field"/></fieldset>'); ?>
+
+
+Scenario: Creating label widget
+
+	Given a label widget:
+	<?php $widget = new T\Label('input1', 'My Fancy Input', null, array(), array('for' => 'input1')); ?>
+
+	When rendered:
+	<?php $renderedWidget = $widget->template(); ?>
+
+	The call should succeed and return a label tag:
+	<?= printEval($renderedWidget == '<label for="input1-field">My Fancy Input</label>') ?>
 
 <?= "\n\n" ?>
