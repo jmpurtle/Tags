@@ -165,7 +165,32 @@ namespace Magnus\Tags {
 	}
 
 	class BooleanInput extends Input {
+
 		public $transform = 'BooleanTransform';
+
+		public function template() {
+			$t = new Tag();
+
+			$attrs = array(
+				'type'    => $this->type,
+				'name'    => $this->name,
+				'id'      => $this->name . '-field',
+				'checked' => $this->value
+			);
+
+			$attrs = array_merge($attrs, $this->kwargs);
+
+			$interior = array();
+
+			$interior[] = $t->input(array(), $attrs);
+
+			if ($this->title) {
+				$interior[] = $t->label(array($this->title), array('for' => $this->name . '-field'));
+			}
+
+			$template = $t->div($interior, array());
+			return $template->render();
+		}
 	}
 
 	class Link extends Widget {}

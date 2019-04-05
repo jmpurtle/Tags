@@ -146,5 +146,17 @@ Scenario: Creating label widget
 
 	The call should succeed and return a label tag:
 	<?= printEval($renderedWidget == '<label for="input1-field">My Fancy Input</label>') ?>
+	
+
+Scenario: Creating a boolean input widget
+
+	Given a boolean input widget:
+	<?php $widget = new T\BooleanInput('bool1', 'A neat bool input', null, array(), array('checked' => true)); ?>
+
+	When rendered:
+	<?php $renderedWidget = $widget->template(); ?>
+
+	The call should succeed and return a label tag:
+	<?= printEval($renderedWidget == '<div><input type name="bool1" id="bool1-field" checked="1"></input><label for="bool1-field">A neat bool input</label></div>') ?>
 
 <?= "\n\n" ?>
