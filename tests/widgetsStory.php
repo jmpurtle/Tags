@@ -146,7 +146,7 @@ Scenario: Creating label widget
 
 	The call should succeed and return a label tag:
 	<?= printEval($renderedWidget == '<label for="input1-field">My Fancy Input</label>') ?>
-	
+
 
 Scenario: Creating a boolean input widget
 
@@ -158,5 +158,17 @@ Scenario: Creating a boolean input widget
 
 	The call should succeed and return a label tag:
 	<?= printEval($renderedWidget == '<div><input type name="bool1" id="bool1-field" checked="1"></input><label for="bool1-field">A neat bool input</label></div>') ?>
+
+
+Scenario: Creating a link widget
+
+	Given a link widget:
+	<?php $widget = new T\Link('awesome', 'An awesome link'); ?>
+
+	When rendered:
+	<?php $renderedWidget = $widget->template(); ?>
+
+	The call should succeed and return a link tag:
+	<?= printEval($renderedWidget == '<a id="awesome-link">An awesome link</a>'); ?>
 
 <?= "\n\n" ?>

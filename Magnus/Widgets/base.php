@@ -193,6 +193,22 @@ namespace Magnus\Tags {
 		}
 	}
 
-	class Link extends Widget {}
+	class Link extends Widget {
+
+		public function template() {
+
+			$t = new Tag();
+
+			$attrs = array(
+				'id'      => $this->name . '-link'
+			);
+
+			$attrs = array_merge($attrs, $this->kwargs);
+
+			$template = $t->a(array($this->title), $attrs);
+			return $template->render();
+		}
+
+	}
 
 }
