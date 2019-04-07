@@ -85,8 +85,38 @@ namespace Magnus\Tags {
 	}
 
 	class CheckboxField extends BooleanInput {
+
 		public $transform = 'BooleanTransform';
 		public $type = 'checkbox';
+
+		public function template() {
+			$t = new Tag();
+
+			$hidAttrs = array(
+				'type'    => 'hidden',
+				'name'    => $this->name,
+				'id'      => $this->name . '-hidden',
+				'value'   => $this->value,
+				'void'    => 'true'
+			);
+
+			$inputAttrs = array(
+				'type'    => $this->type,
+				'name'    => $this->name,
+				'id'      => $this->name . '-field',
+				'checked' => $this->value,
+				'void'    => 'true'
+			);
+
+			$attrs = array_merge($inputAttrs, $this->kwargs);
+
+			$template = $t->div(array(
+				$t->input(array(), $hidAttrs),
+				$t->input(array(), $inputAttrs)
+			), array());
+
+			return $template->render();
+		}
 	}
 
 	class TextArea extends Input {}

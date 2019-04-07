@@ -171,4 +171,16 @@ Scenario: Creating a link widget
 	The call should succeed and return a link tag:
 	<?= printEval($renderedWidget == '<a id="awesome-link">An awesome link</a>'); ?>
 
+
+Scenario: Creating a checkbox widget
+	
+	Given a checkbox widget:
+	<?php $widget = new T\CheckboxField('test'); ?>
+
+	When rendered:
+	<?php $renderedWidget = $widget->template(); ?>
+
+	The call should succeed and return a complete checkbox set:
+	<?= printEval($renderedWidget == '<div><input type="hidden" name="test" id="test-hidden" value/><input type="checkbox" name="test" id="test-field" checked/></div>') ?>
+
 <?= "\n\n" ?>
