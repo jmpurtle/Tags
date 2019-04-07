@@ -183,4 +183,16 @@ Scenario: Creating a checkbox widget
 	The call should succeed and return a complete checkbox set:
 	<?= printEval($renderedWidget == '<div><input type="hidden" name="test" id="test-hidden" value/><input type="checkbox" name="test" id="test-field" checked/></div>') ?>
 
+
+Scenario: Creating a textarea widget
+
+	Given a textarea widget:
+	<?php $widget = new T\TextArea('test', null, null, array(), array('test' => 'textarea content')); ?>
+
+	When rendered:
+	<?php $renderedWidget = $widget->template(); ?>
+
+	The call should succeed and return a textarea containing content:
+	<?= printEval($renderedWidget == '<textarea name="test" id="test-field">textarea content</textarea>') ?>
+
 <?= "\n\n" ?>

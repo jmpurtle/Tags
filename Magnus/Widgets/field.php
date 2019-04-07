@@ -119,7 +119,25 @@ namespace Magnus\Tags {
 		}
 	}
 
-	class TextArea extends Input {}
+	class TextArea extends Input {
+
+		public function template() {
+			$t = new Tag();
+
+			$attrs = array(
+				'name' => $this->name,
+				'id'   => $this->name . '-field'
+			);
+
+			$attrs = array_merge($attrs, $this->kwargs);
+
+			$value = $this->value;
+			unset($attrs[$this->name]);
+
+			$template = $t->textarea(array($value), $attrs);
+			return $template->render();
+		}
+	}
 
 	class SelectField extends Input {
 		public $values = array();
