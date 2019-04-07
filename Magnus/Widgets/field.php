@@ -140,6 +140,48 @@ namespace Magnus\Tags {
 	}
 
 	class SelectField extends Input {
+
 		public $values = array();
+
+		public function template() {
+			$t = new Tag();
+
+			$value = $this->value;
+
+			$options = array();
+			foreach ($this->values as $option) {
+				if (!is_array($option[1])) {
+					$attrs = array(
+						'value'    => $option[0],
+						'selected' => ($option[0] == $value)
+					);
+					$options[] = $t->option(array($option[1]), $attrs);
+					continue;
+				}
+
+				$interior = array();
+				foreach ($option[1] as $i) {
+					$attrs = array(
+						'value'    => $i[0],
+						'selected' => ($i[0] == $value)
+					);
+					$interior[] = $t->option(array($i[1]), $attrs);
+				}
+
+				$options[] = $t->optgroup($interior, array('label' => $option[0]));
+			}
+
+			$attrs = array(
+				'name' => $this->name,
+				'id'   => $this->name . '-select'
+			);
+
+			$attrs = array_merge($attrs, $this->kwargs);
+			unset($attrs[$this->name]);
+
+			$template = $t->select($options, $attrs);
+			return $template->render();
+		}
+
 	}
 }

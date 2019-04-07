@@ -195,4 +195,22 @@ Scenario: Creating a textarea widget
 	The call should succeed and return a textarea containing content:
 	<?= printEval($renderedWidget == '<textarea name="test" id="test-field">textarea content</textarea>') ?>
 
+
+Scenario: Creating a select field widget
+
+	Given a select field widget:
+	<?php $widget = new T\SelectField('test', null, null, array(), array('test' => 'foo', 'values' => array(
+		array('foo', 'foo'),
+		array('bar', array(
+			array(123, 'baz'),
+			array(456, 'thud')
+		))
+	))) ?>
+
+	When rendered:
+	<?php $renderedWidget = $widget->template(); ?>
+
+	The call should succeed and return a select field:
+	<?= printEval($renderedWidget == '<select name="test" id="test-select"><option value="foo" selected="1">foo</option><optgroup label="bar"><option value="123" selected="">baz</option><option value="456" selected="">thud</option></optgroup></select>') ?>
+
 <?= "\n\n" ?>
