@@ -48,7 +48,6 @@ namespace Magnus\Tags {
 				$t->button(array('<<'), array('class' => 'page-first', $previousBtnState)),
 				$t->button(array('<'), array('class' => 'page-prev', $previousBtnState)),
 				$t->input(array(), array(
-					'id'         => 'pageIndex',
 					'value'      => $this->kwargs['data-page'],
 					'class'      => 'pages',
 					'data-pages' => $pages
