@@ -50,7 +50,8 @@ namespace Magnus\Tags {
 				$t->input(array(), array(
 					'value'      => $this->kwargs['data-page'],
 					'class'      => 'pages',
-					'data-pages' => $pages
+					'data-pages' => $pages,
+					'type'       => 'number'
 				)),
 				$t->button(array('>'), array('class' => 'page-next', $nextBtnState)),
 				$t->button(array('>>'), array('class' => 'page-last', $nextBtnState)),
