@@ -213,4 +213,28 @@ Scenario: Creating a select field widget
 	The call should succeed and return a select field:
 	<?= printEval($renderedWidget == '<select name="test" id="test-select"><option value="foo" selected="1">foo</option><optgroup label="bar"><option value="123" selected="">baz</option><option value="456" selected="">thud</option></optgroup></select>') ?>
 
+
+Scenario: Creating a TableLayout widget:
+
+	Given an empty table widget:
+	<?php $widget = new T\TableLayout('test', null, null, array(), array()); ?>
+
+	When rendered:
+	<?php $renderedWidget = $widget->template(); ?>
+
+	The call should succeed and return an empty table:
+	<?= printEval($renderedWidget == '<table></table>') ?>
+
+	Given a filled table widget:
+	<?php $widget = new T\TableLayout('test', null, null, array(
+		array('foo' => 'bar', 'baz' => 'thud'),
+		array('foo' => 'bar2', 'baz' => 'thud2')
+	), array('foo' => 'bar')); ?>
+
+	When rendered:
+	<?php $renderedWidget = $widget->template(); ?>
+
+	The call should succeed and return a filled table:
+	<?= printEval($renderedWidget == '<table foo="bar"><tr><th>foo</th><th>baz</th></tr><tr><td>bar</td><td>thud</td></tr><tr><td>bar2</td><td>thud2</td></tr></table>') ?>
+
 <?= "\n\n" ?>
