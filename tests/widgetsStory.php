@@ -251,6 +251,6 @@ Scenario: Creating a Pagination widget:
 	<?php $renderedWidget = $widget->template(); ?>
 
 	The call should succeed and return a pagination widget:
-	<?= printEval($renderedWidget == '<form><button class="page-first" disabled><<</button><button class="page-prev" disabled><</button><input value="1" class="pages" data-pages="6"></input><button class="page-next">></button><button class="page-last">>></button></form>'); ?>
+	<?= printEval($renderedWidget == '<form><button class="page-first" disabled><<</button><button class="page-prev" disabled><</button><input type="number" value="1" class="pages" data-pages="6"></input><button class="page-next">></button><button class="page-last">>></button></form>'); ?>
 
 <?= "\n\n" ?>
