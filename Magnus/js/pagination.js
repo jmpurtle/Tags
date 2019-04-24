@@ -13,23 +13,23 @@ function getPage(page, limit, method, url, destination) {
 function pageBtnState(paginator, disabled, direction) {
 	switch (direction) {
 		case 'forward':
-			paginator.find('.page-next').disabled = disabled;
-			paginator.find('.page-last').disabled = disabled;
+			paginator.querySelector('.page-next').disabled = disabled;
+			paginator.querySelector('.page-last').disabled = disabled;
 			break;
 
 		case 'backward':
-			paginator.find('.page-first').disabled = disabled;
-			paginator.find('.page-prev').disabled = disabled;
+			paginator.querySelector('.page-first').disabled = disabled;
+			paginator.querySelector('.page-prev').disabled = disabled;
 			break;
 	}
 }
 
-// Provide a callback with no arguments
+// Provide a callback with the control as an argument
 function paginator(controls, callback) {
 	controls.addEventListener('click', function(e) {
 		e.preventDefault();
 		action = e.target.classList.value;
-		page = controls.find('.paginatorIndex');
+		page = controls.querySelector('.pages');
 		limit = page.dataset.limit;
 
 		switch (action) {
@@ -38,7 +38,7 @@ function paginator(controls, callback) {
 				pageBtnState(controls, true, 'backward');
 				pageBtnState(controls, false, 'forward');
 
-				callback();
+				callback(controls);
 				break;
 
 			case 'page-prev':
@@ -50,11 +50,11 @@ function paginator(controls, callback) {
 					pageBtnState(controls, true, 'backward');
 				}
 
-				callback();
+				callback(controls);
 				break;
 
 			case 'page-next':
-				page.value = page.value + 1;
+				page.value = parseInt(page.value) + 1;
 				pageBtnState(controls, false, 'backward');
 
 				if (page.value > (page.dataset.pages - 1)) {
@@ -62,7 +62,7 @@ function paginator(controls, callback) {
 					pageBtnState(controls, true, 'forward');
 				}
 
-				callback();
+				callback(controls);
 				break;
 
 			case 'page-last':
@@ -70,14 +70,14 @@ function paginator(controls, callback) {
 				pageBtnState(controls, false, 'backward');
 				pageBtnState(controls, true, 'forward');
 
-				callback();
+				callback(controls);
 				break;
 		}
 	});
 
 	controls.addEventListener('change', function(e) {
 		e.preventDefault();
-		page = controls.find('paginatorIndex');
+		page = controls.querySelector('.pages');
 		
 		if (page.value < 2) {
 			page.value = 1;
@@ -98,6 +98,6 @@ function paginator(controls, callback) {
 			pageBtnState(controls, false, 'forward');
 		}
 		
-		callback();
+		callback(controls);
 	});
 }
