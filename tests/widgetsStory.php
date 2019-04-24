@@ -237,4 +237,20 @@ Scenario: Creating a TableLayout widget:
 	The call should succeed and return a filled table:
 	<?= printEval($renderedWidget == '<table foo="bar"><tr><th>foo</th><th>baz</th></tr><tr><td>bar</td><td>thud</td></tr><tr><td>bar2</td><td>thud2</td></tr></table>') ?>
 
+
+Scenario: Creating a Pagination widget:
+
+	Given a pagination widget:
+	<?php $widget = new T\Pagination('test', null, null, array(), array(
+		'data-limit' => 15,
+		'data-page'  => 1,
+		'data-rows'  => 76
+	)); ?>
+
+	When rendered:
+	<?php $renderedWidget = $widget->template(); ?>
+
+	The call should succeed and return a pagination widget:
+	<?= printEval($renderedWidget == '<form><button class="page-first" disabled><<</button><button class="page-prev" disabled><</button><input id="pageIndex" value="1" class="pages" data-pages="6"></input><button class="page-next">></button><button class="page-last">>></button></form>'); ?>
+
 <?= "\n\n" ?>

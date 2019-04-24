@@ -44,7 +44,8 @@ namespace Magnus {
 
 			'Magnus\\Tags\\DefinitionListLayout' => '/Magnus/Widgets/layout.php',
 			'Magnus\\Tags\\TableLayout'          => '/Magnus/Widgets/layout.php',
-			'Magnus\\Tags\\SubmitFooter'         => '/Magnus/Widgets/layout.php'
+			'Magnus\\Tags\\SubmitFooter'         => '/Magnus/Widgets/layout.php',
+			'Magnus\\Tags\\Pagination'           => '/Magnus/Widgets/layout.php'
 		);
 
 		if (isset($packageClassMap[$className])) {

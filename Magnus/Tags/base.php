@@ -24,7 +24,12 @@ namespace Magnus\Tags {
 			$attrString = '';
 
 			foreach ($kwargs as $key => $value) {
-				$attrString .= ' ' . $key;
+				// To allow passing strings literally for non-value attrs
+				if (is_integer($key)) { $key = $value; $value = null; }
+
+				if ($key !== null) {
+					$attrString .= ' ' . $key;
+				}
 
 				if ($value !== null) {
 					if (is_array($value)) { $value = json_encode($value); }
